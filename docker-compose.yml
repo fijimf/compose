@@ -10,17 +10,33 @@ services:
       - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
   schedule:
     image: fijbook-schedule:1.0.2
-    depends_on: 
+    depends_on:
       - db
     environment:
       DBHOST: db
       DBUSER: deepfijdb
       DBPASSWORD: password
-    expose: 
+    expose:
       - 8074
+  news:
+    image: fijbook-news:1.0.0
+    depends_on:
+      - db
+    environment:
+      DBHOST: db
+      DBUSER: deepfijdb
+      DBPASSWORD: password
+  scraping:
+    image: fijbook-news:1.0.0
+    depends_on:
+      - db
+    environment:
+      DBHOST: db
+      DBUSER: deepfijdb
+      DBPASSWORD: password
   frontend:
     image: fijbook-fe:1.0.0
-    ports: 
+    ports:
       - 80:9000
     depends_on:
       - schedule
