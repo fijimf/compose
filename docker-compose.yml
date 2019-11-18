@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: deepfijdb
+    volumes:
+      - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
+  schedule:
+    image: fijbook-schedule:1.0.2
+    depends_on: 
+      - db
+    environment:
+      DBHOST: db
+      DBUSER: deepfijdb
+      DBPASSWORD: password
+    expose: 
+      - 8074
+  frontend:
+    image: fijbook-fe:1.0.0
+    ports: 
+      - 80:9000
+    depends_on:
+      - schedule
