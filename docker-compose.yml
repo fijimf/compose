@@ -40,3 +40,6 @@ services:
       - 80:9000
     depends_on:
       - schedule
+    environment:
+      - AWS_SMTP_USERNAME: ${AWS_SMTP_USERNAME}
+      - AWS_SMTP_PASSWORD: ${AWS_SMTP_PASSWORD}
