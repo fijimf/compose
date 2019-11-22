@@ -4,42 +4,55 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: deepfijdb
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=deepfijdb
     volumes:
       - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
   schedule:
     image: fijbook-schedule:1.0.2
+    restart: on-failure
     depends_on:
       - db
     environment:
-      DBHOST: db
-      DBUSER: deepfijdb
-      DBPASSWORD: password
+      - DBHOST=db
+      - DBUSER=deepfijdb
+      - DBPASSWORD=password
+      - SCHED_SERVER_PORT
     expose:
-      - 8074
+      - ${SCHED_SERVER_PORT}
   news:
     image: fijbook-news:1.0.0
     depends_on:
       - db
     environment:
-      DBHOST: db
-      DBUSER: deepfijdb
-      DBPASSWORD: password
+      - DBHOST=db
+      - DBUSER=deepfijdb
+      - DBPASSWORD=password
+      - NEWS_SERVER_PORT
+    expose:
+      - ${NEWS_SERVER_PORT}
   scraping:
-    image: fijbook-news:1.0.0
+    image: fijbook-scraper:1.0.0
     depends_on:
       - db
+      - schedule
     environment:
-      DBHOST: db
-      DBUSER: deepfijdb
-      DBPASSWORD: password
+      - DBHOST=db
+      - DBUSER=deepfijdb
+      - DBPASSWORD=password
+      - SCHED_SERVER_HOST=schedule
+      - SCHED_SERVER_PORT
+      - SCRAPE_SERVER_PORT
+    expose:
+      - ${SCRAPE_SERVER_PORT}
   frontend:
     image: fijbook-fe:1.0.0
     ports:
       - 80:9000
     depends_on:
       - schedule
+      - news
+      - scraping
     environment:
-      - AWS_SMTP_USERNAME: ${AWS_SMTP_USERNAME}
-      - AWS_SMTP_PASSWORD: ${AWS_SMTP_PASSWORD}
+      AWS_SMTP_USERNAME: ${AWS_SMTP_USERNAME}
+      AWS_SMTP_PASSWORD: ${AWS_SMTP_PASSWORD}
