@@ -54,5 +54,9 @@ services:
       - news
       - scraping
     environment:
-      AWS_SMTP_USERNAME: ${AWS_SMTP_USERNAME}
-      AWS_SMTP_PASSWORD: ${AWS_SMTP_PASSWORD}
+      - AWS_SMTP_USERNAME=${AWS_SMTP_USERNAME}
+      - AWS_SMTP_PASSWORD=${AWS_SMTP_PASSWORD}
+      - application.home=/opt/docker/play
+    volumes:
+      - ${PLAY_APPLICATION_DIR}:/opt/docker/play
+      - ${PLAY_APPLICATION_LOG}:/opt/docker/logs
