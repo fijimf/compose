@@ -8,8 +8,32 @@ services:
       - POSTGRES_USER=deepfijdb
     volumes:
       - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
+  quote:
+    image: fijbook-quote:1.0.1
+    restart: on-failure
+    depends_on:
+      - db
+    environment:
+      - DBHOST=db
+      - DBUSER=deepfijdb
+      - DBPASSWORD=password
+      - QUOTE_SERVER_PORT
+    expose:
+      - ${QUOTE_SERVER_PORT}
+  user:
+    image: fijbook-user:1.0.0
+    restart: on-failure
+    depends_on:
+      - db
+    environment:
+      - DBHOST=db
+      - DBUSER=deepfijdb
+      - DBPASSWORD=password
+      - USER_SERVER_PORT
+    expose:
+      - ${USER_SERVER_PORT}
   schedule:
-    image: fijbook-schedule:1.0.2
+    image: fijbook-schedule:1.0.2b
     restart: on-failure
     depends_on:
       - db
@@ -50,6 +74,8 @@ services:
     ports:
       - 80:9000
     depends_on:
+      - user
+      - quote
       - schedule
       - news
       - scraping
