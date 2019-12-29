@@ -70,7 +70,7 @@ services:
     expose:
       - ${SCRAPE_SERVER_PORT}
   frontend:
-    image: fijbook-fe:1.0.0
+    image: fijbook-fe:1.0.2
     ports:
       - 80:9000
     depends_on:
@@ -80,9 +80,11 @@ services:
       - news
       - scraping
     environment:
-      - AWS_SMTP_USERNAME=${AWS_SMTP_USERNAME}
-      - AWS_SMTP_PASSWORD=${AWS_SMTP_PASSWORD}
+      - AWS_SMTP_USERNAME
+      - AWS_SMTP_PASSWORD
+      - USER_SERVER_PORT
+      - SCHED_SERVER_PORT
       - application.home=/opt/docker/play
     volumes:
-      - ${PLAY_APPLICATION_DIR}:/opt/docker/play
+      - ${PLAY_APPLICATION_DIR}:/opt/docker/playbg
       - ${PLAY_APPLICATION_LOG}:/opt/docker/logs
