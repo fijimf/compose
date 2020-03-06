@@ -9,4 +9,6 @@ export AWS_SMTP_PASSWORD
 
 source ./ports.sh
 
+env
+
 /usr/local/bin/docker-compose up --force-recreate --detach
