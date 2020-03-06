@@ -86,6 +86,9 @@ services:
       - PLAY_APPLICATION_LOG
       - USER_SERVER_PORT
       - SCHED_SERVER_PORT
+      - SCRAPE_SERVER_PORT
+      - NEWS_SERVER_PORT
+      - QUOTE_SERVER_PORT
       - application.home=/opt/docker/play
     volumes:
       - ${PLAY_APPLICATION_DIR}:/opt/docker/playbg
