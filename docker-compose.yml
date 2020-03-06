@@ -72,7 +72,10 @@ services:
   frontend:
     image: fijbook-fe:1.0.2
     ports:
-      - 80:9000
+      - target: 9000
+        published: 80
+        protocol: tcp
+        mode: host
     depends_on:
       - user
       - quote
