@@ -72,7 +72,7 @@ services:
   frontend:
     image: fijbook-fe:1.0.2
     ports:
-      - 9000:80
+      - 80:9000
     depends_on:
       - user
       - quote
@@ -82,6 +82,8 @@ services:
     environment:
       - AWS_SMTP_USERNAME
       - AWS_SMTP_PASSWORD
+      - PLAY_APPLICATION_DIR
+      - PLAY_APPLICATION_LOG
       - USER_SERVER_PORT
       - SCHED_SERVER_PORT
       - application.home=/opt/docker/play
