@@ -71,8 +71,7 @@ services:
       - ${SCRAPE_SERVER_PORT}
   frontend:
     image: fijbook-fe:1.0.2
-    ports:
-      - target: 9000:80
+    ports: 9000:80
     depends_on:
       - user
       - quote
