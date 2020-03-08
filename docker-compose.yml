@@ -33,7 +33,7 @@ services:
     expose:
       - ${USER_SERVER_PORT}
   schedule:
-    image: fijbook-schedule:1.0.2b
+    image: fijbook-schedule:latest
     restart: on-failure
     depends_on:
       - db
