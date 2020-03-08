@@ -9,4 +9,4 @@ export AWS_SMTP_PASSWORD
 
 source ./ports.sh
 
-/usr/local/bin/docker-compose down
+/usr/local/bin/docker-compose down --project-name deepfij
