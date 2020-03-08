@@ -11,4 +11,4 @@ source ./ports.sh
 
 env
 
-/usr/local/bin/docker-compose up --force-recreate --detach --project-name deepfij
+/usr/local/bin/docker-compose up --force-recreate --detach
