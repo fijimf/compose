@@ -70,7 +70,7 @@ services:
     expose:
       - ${SCRAPE_SERVER_PORT}
   frontend:
-    image: fijbook-fe:1.0.2
+    image: fijbook-fe:1.1.0
     ports:
       - 80:9000
     depends_on:
