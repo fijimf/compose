@@ -1,2 +1,2 @@
 # compose
-running the microservices through docker compose
+Running the database, microservices and play through docker compose
